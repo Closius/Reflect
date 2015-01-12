@@ -20,7 +20,8 @@ class MainMenu: SKScene {
     override init(size: CGSize){
         super.init(size: size)
         
-        self.backgroundColor = SKColor.blackColor()
+        self.backgroundColor = SKColor.grayColor()
+        self.name = "MainScene"
         
         //CREATE WELCOME LABEL
         var labelWelcome = SKLabelNode(fontNamed: "unifont")
@@ -33,33 +34,29 @@ class MainMenu: SKScene {
         self.addChild(labelWelcome)
         
         //CREATE START GAME BUTTON
-        var startGameButton = SKLabelNode(fontNamed: "unifont")
-        startGameButton.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 200)
-        startGameButton.fontSize = 25
-        startGameButton.fontColor = SKColor.greenColor()
-        startGameButton.color = SKColor.grayColor()
-        startGameButton.calculateAccumulatedFrame()
- 
-        startGameButton.text = "START GAME"
-        startGameButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-        startGameButton.name = "StartGame"
-        self.addChild(startGameButton)
         
-  /*      // CREATE PADDLE
-        let paddle = SKShapeNode(rect: rectPaddle)
-        paddle.name = paddleCategoryName
-        paddle.fillColor = UIColor.greenColor()
-        paddle.strokeColor = UIColor.greenColor()
-        paddle.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 6)
-        paddle.physicsBody = SKPhysicsBody(rectangleOfSize: paddle.frame.size)
-        paddle.physicsBody?.dynamic = false
-        paddle.physicsBody?.restitution = 1
-        paddle.physicsBody?.linearDamping = 0
-        paddle.physicsBody?.friction = 0
-        self.addChild(paddle)
-   */
-     }
+        var w:CGFloat = 100
+        var h:CGFloat = 40
+        var startGameButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        startGameButton.name = "Button1"
+        startGameButton.position = CGPointMake(120, 100)
+        startGameButton.text = "MyButton"
+        startGameButton.fontSize = 20
+        startGameButton.fontName = "unifont"
+        startGameButton.fillColor = UIColor.magentaColor()
+        startGameButton.fontColor = UIColor.blackColor()
+        startGameButton.createLabel()
+        
+        startGameButton.physicsBody = SKPhysicsBody(rectangleOfSize: startGameButton.frame.size)
+        startGameButton.physicsBody?.dynamic = false
+        
+        self.addChild(startGameButton)
+ 
+    }
     
+    
+ 
+
 
     
     override func didMoveToView(view: SKView) {
@@ -72,8 +69,6 @@ class MainMenu: SKScene {
         return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

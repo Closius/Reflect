@@ -8,66 +8,59 @@
 
 import SpriteKit
 
-class AKButtonFromLabelNode: SKNode {
-   
- //   var defaultButton: SKShapeNode
- //   var activeButton: SKShapeNode
-
+class AKButtonFromLabelNode: SKShapeNode {
+       
+    var fontName: String?
+    var fontSize: CGFloat?
+    var fontColor: UIColor?
     var text: String?
-    var nameButton: String?
-    var backgroundBox: CGRect?
-    var textColor: SKColor?
-    var backgroundColor: SKColor?
-    var srtokeColor: SKColor?
-    var positionButton: CGPoint?
-    
-
-//    var defaultButton: SKSpriteNode
-//    05.var activeButton: SKSpriteNode
-//    06.var action: () -> Void
-//    07.
-//    08.init(defaultButtonImage: String, activeButtonImage: String, buttonAction: () -> Void) {
-//        09.defaultButton = SKSpriteNode(imageNamed: defaultButtonImage)
-//        10.activeButton = SKSpriteNode(imageNamed: activeButtonImage)
-//        11.activeButton.hidden = true
-//        12.action = buttonAction
-//        13.
-//        14.super.init()
-//        15.
-//            16.userInteractionEnabled = true
-//        17.addChild(defaultButton)
-//        18.addChild(activeButton)
-
-    override init(){
+ 
+    func createLabel() {
         
-//        var startGameButton = SKLabelNode(fontNamed: "unifont")
-//        startGameButton.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 200)
-//        startGameButton.fontSize = 25
-//        startGameButton.fontColor = SKColor.greenColor()
-//        startGameButton.color = SKColor.grayColor()
-//        startGameButton.calculateAccumulatedFrame()
-//        
-//        startGameButton.text = "START GAME"
-//        startGameButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-//        startGameButton.name = "StartGame"
-//        self.addChild(startGameButton)
-       super.init()
-        // CREATE BACKGROUND
-        var defaultButton = SKShapeNode(rect: backgroundBox!)
-        defaultButton.name = nameButton! + "_background"
-        defaultButton.fillColor = backgroundColor!
-        defaultButton.strokeColor = (srtokeColor != nil) ? srtokeColor! : backgroundColor!
-        defaultButton.position = positionButton!
-        defaultButton.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(defaultButton.frame.width, defaultButton.frame.height))
-        defaultButton.physicsBody?.dynamic = false
-        addChild(defaultButton)
-
+        if (fontName == nil) || (fontSize == nil) || (fontColor == nil) || (text == nil) {
+            fontName = "System"
+            fontSize = 5
+            fontColor = UIColor.greenColor()
+            text = "Button"
+            println("Warning: One of properties of object AKButtonFromLabelNode is not difened. Default values have been set (fontName = System, fontSize = 5, fontColor = green, text = Button).")
+        }
+        
+        // CREATE TEXT
+        var defaultButton = SKLabelNode(fontNamed: fontName!)
+        var font:UIFont = UIFont(name: fontName!, size: fontSize!)!
+        defaultButton.position = CGPointMake(0, -font.capHeight/2)
+        defaultButton.fontSize = fontSize!
+        defaultButton.fontColor = fontColor!
+        defaultButton.text = text!
+        defaultButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        defaultButton.name =  "_label"
+        super.addChild(defaultButton)
+        println(super.name)
     }
-
+    
+    override init() {
+        super.init()
+        
+        super.strokeColor = super.fillColor
+   //     super.physicsBody = SKPhysicsBody(rectangleOfSize: super.frame.size)
+    //    super.physicsBody?.dynamic = false
+        
+        
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    
+        let touch: AnyObject! = touches.anyObject()
+        let touchLocation = touch.locationInNode(childNodeWithName(super.name!))
+        
+        println("bagaga")
+        println(touchLocation.x)
+        println(touchLocation.y)
+        
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-
-
+    
 }
