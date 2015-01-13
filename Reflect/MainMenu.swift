@@ -60,6 +60,7 @@ class MainMenu: SKScene {
         settingsButton.fontName = "unifont"
         settingsButton.fillColor = UIColor.greenColor()
         settingsButton.fontColor = UIColor.blackColor()
+        settingsButton.action = { [weak self] in self.view?.presentScene(SettingsMenu(size: CGSizeMake(self.frame.width, self.frame.height))) }
         settingsButton.createLabel()
         self.addChild(settingsButton)
         
@@ -81,10 +82,15 @@ class MainMenu: SKScene {
         
         
         
-        
 
     }
     
+   
+    
+    override func willMoveFromView(view: SKView) {
+        
+    
+    }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         

@@ -20,7 +20,7 @@ class GameViewController: UIViewController {
         if skView.scene == nil {
             //    skView.showsFPS = true
             //    skView.showsNodeCount = true
-                skView.showsPhysics = true
+            //    skView.showsPhysics = true
             let mainScene = MainMenu(size: skView.bounds.size)
             mainScene.scaleMode = .AspectFill
             skView.presentScene(mainScene)

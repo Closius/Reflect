@@ -160,11 +160,11 @@ class SettingsMenu: SKScene {
     // Test/Game mode button
         if self.childNodeWithName("TestButton")?.containsPoint(location) == true {
             if gameMode == true {
-                (self.childNodeWithName("TestButton")! as SKLabelNode).text = "Game Mode"
+                (self.childNodeWithName("TestButton")! as AKButtonFromLabelNode).text = "Game Mode"
                 println(gameMode)
                 gameMode = false
             } else {
-                (self.childNodeWithName("TestButton")! as SKLabelNode).text = "Test Mode"
+                (self.childNodeWithName("TestButton")! as AKButtonFromLabelNode).text = "Test Mode"
                 println(gameMode)
                 gameMode = true
             }

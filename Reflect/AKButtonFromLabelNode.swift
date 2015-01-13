@@ -14,6 +14,7 @@ class AKButtonFromLabelNode: SKShapeNode, SKSceneDelegate {
     var fontSize: CGFloat?
     var fontColor: UIColor?
     var text: String?
+    var action: (() -> Void)?
  
     func createLabel() {
         
@@ -50,13 +51,15 @@ class AKButtonFromLabelNode: SKShapeNode, SKSceneDelegate {
         super.init()
         
         super.strokeColor = super.fillColor
+        self.userInteractionEnabled = true   // Recive touch events!!!!!
         
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
     
         
-        println(super.name)
+      //  println(super.name)
+        action!()
         
         
     }
