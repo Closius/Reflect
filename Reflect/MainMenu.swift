@@ -16,16 +16,20 @@ class MainMenu: SKScene {
     var eventMusicPlayer = AVAudioPlayer()
     let toastyMusicUrl = NSBundle.mainBundle().URLForResource("toasty", withExtension: "mp3")
     
+    // Names of buttons
+    let startGameButtonCategoryName     = "StartGameButton"
+    let settingsButtonCategoryName      = "SettingsButton"
+    let aboutButtonCategoryName         = "AboutButton"
     
     override init(size: CGSize){
         super.init(size: size)
         
-        self.backgroundColor = SKColor.grayColor()
+        self.backgroundColor = SKColor.blackColor()
         self.name = "MainScene"
         
         //CREATE WELCOME LABEL
         var labelWelcome = SKLabelNode(fontNamed: "unifont")
-        labelWelcome.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 150)
+        labelWelcome.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 130)
         labelWelcome.fontSize = 30
         labelWelcome.fontColor = SKColor.greenColor()
         labelWelcome.text = "Weclome to Reflect!"
@@ -34,30 +38,73 @@ class MainMenu: SKScene {
         self.addChild(labelWelcome)
         
         //CREATE START GAME BUTTON
-        
-        var w:CGFloat = 100
+        var w:CGFloat = 130
         var h:CGFloat = 40
         var startGameButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
-        startGameButton.name = "Button1"
-        startGameButton.position = CGPointMake(120, 100)
-        startGameButton.text = "MyButton"
+        startGameButton.name = startGameButtonCategoryName
+        startGameButton.position = CGPointMake(self.frame.size.width / 2, labelWelcome.position.y - 130)
+        startGameButton.text = "Start Game"
         startGameButton.fontSize = 20
         startGameButton.fontName = "unifont"
-        startGameButton.fillColor = UIColor.magentaColor()
+        startGameButton.fillColor = UIColor.greenColor()
         startGameButton.fontColor = UIColor.blackColor()
         startGameButton.createLabel()
-        
-        startGameButton.physicsBody = SKPhysicsBody(rectangleOfSize: startGameButton.frame.size)
-        startGameButton.physicsBody?.dynamic = false
-        
         self.addChild(startGameButton)
- 
+        
+        //CREATE SETTINGS BUTTON
+        var settingsButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        settingsButton.name = settingsButtonCategoryName
+        settingsButton.position = CGPointMake(self.frame.size.width / 2, startGameButton.position.y - 80)
+        settingsButton.text = "Settings"
+        settingsButton.fontSize = 20
+        settingsButton.fontName = "unifont"
+        settingsButton.fillColor = UIColor.greenColor()
+        settingsButton.fontColor = UIColor.blackColor()
+        settingsButton.createLabel()
+        self.addChild(settingsButton)
+        
+        //CREATE ABOUT BUTTON
+        var aboutButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        aboutButton.name = aboutButtonCategoryName
+        aboutButton.position = CGPointMake(self.frame.size.width / 2, settingsButton.position.y - 80)
+        aboutButton.text = "About"
+        aboutButton.fontSize = 20
+        aboutButton.fontName = "unifont"
+        aboutButton.fillColor = UIColor.greenColor()
+        aboutButton.fontColor = UIColor.blackColor()
+        aboutButton.createLabel()
+        self.addChild(aboutButton)
+        
+        
+      
+        
+        
+        
+        
+        
+
     }
     
     
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        
+        var touch: UITouch = touches.allObjects[0] as UITouch
+        var location: CGPoint = touch.locationInNode(self)
+    
+        if self.childNodeWithName(startGameButtonCategoryName)?.containsPoint(location) == true {
+            self.view?.presentScene(GameScene(size: CGSizeMake(self.frame.width, self.frame.height)))
+        }
+        
+        if self.childNodeWithName(settingsButtonCategoryName)?.containsPoint(location) == true {
+            self.view?.presentScene(SettingsMenu(size: CGSizeMake(self.frame.width, self.frame.height)))
+        }
+        
+        if self.childNodeWithName(aboutButtonCategoryName)?.containsPoint(location) == true {
+            println(aboutButtonCategoryName)
+        }
+        
+    }
  
-
-
     
     override func didMoveToView(view: SKView) {
         eventMusicPlayer = AVAudioPlayer(contentsOfURL: toastyMusicUrl, error: nil)

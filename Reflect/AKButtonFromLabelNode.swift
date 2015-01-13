@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class AKButtonFromLabelNode: SKShapeNode {
+class AKButtonFromLabelNode: SKShapeNode, SKSceneDelegate {
        
     var fontName: String?
     var fontSize: CGFloat?
@@ -17,12 +17,21 @@ class AKButtonFromLabelNode: SKShapeNode {
  
     func createLabel() {
         
-        if (fontName == nil) || (fontSize == nil) || (fontColor == nil) || (text == nil) {
+        if (fontName == nil) {
             fontName = "System"
+            println("Warning: Property 'fontName' of object AKButtonFromLabelNode is not difened. Default values have been set: fontName = System.")
+        }
+        if (fontSize == nil) {
             fontSize = 5
+            println("Warning: Property 'fontSize' of object AKButtonFromLabelNode is not difened. Default values have been set: fontSize = 5.")
+        }
+        if (fontColor == nil) {
             fontColor = UIColor.greenColor()
+            println("Warning: Property 'fontColor' of object AKButtonFromLabelNode is not difened. Default values have been set: fontColor = UIColor.greenColor().")
+        }
+        if (text == nil) {
             text = "Button"
-            println("Warning: One of properties of object AKButtonFromLabelNode is not difened. Default values have been set (fontName = System, fontSize = 5, fontColor = green, text = Button).")
+            println("Warning: Property 'text' of object AKButtonFromLabelNode is not difened. Default values have been set: text = Button.")
         }
         
         // CREATE TEXT
@@ -33,29 +42,22 @@ class AKButtonFromLabelNode: SKShapeNode {
         defaultButton.fontColor = fontColor!
         defaultButton.text = text!
         defaultButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-        defaultButton.name =  "_label"
+        defaultButton.name =  super.name! + "_label"
         super.addChild(defaultButton)
-        println(super.name)
     }
     
     override init() {
         super.init()
         
         super.strokeColor = super.fillColor
-   //     super.physicsBody = SKPhysicsBody(rectangleOfSize: super.frame.size)
-    //    super.physicsBody?.dynamic = false
-        
         
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
     
-        let touch: AnyObject! = touches.anyObject()
-        let touchLocation = touch.locationInNode(childNodeWithName(super.name!))
         
-        println("bagaga")
-        println(touchLocation.x)
-        println(touchLocation.y)
+        println(super.name)
+        
         
     }
     

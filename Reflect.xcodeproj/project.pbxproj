@@ -15,6 +15,8 @@
 		8465513C1A63CEDE0059BCAD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8465513A1A63CEDE0059BCAD /* LaunchScreen.xib */; };
 		846551481A63CEDE0059BCAD /* ReflectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846551471A63CEDE0059BCAD /* ReflectTests.swift */; };
 		846551521A63D0250059BCAD /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846551511A63D0250059BCAD /* Entitlements.plist */; };
+		84977D501A65338E00D30F57 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84977D4F1A65338E00D30F57 /* GameOver.swift */; };
+		84977D521A65363100D30F57 /* SettingsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84977D511A65363100D30F57 /* SettingsMenu.swift */; };
 		84A3472C1A63D93E0069C4FE /* toasty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A3472A1A63D93E0069C4FE /* toasty.mp3 */; };
 		84A3472D1A63D93E0069C4FE /* unifont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84A3472B1A63D93E0069C4FE /* unifont.ttf */; };
 		84AA3B951A63FD1D008381BF /* AKButtonFromLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA3B941A63FD1D008381BF /* AKButtonFromLabelNode.swift */; };
@@ -44,6 +46,8 @@
 		846551461A63CEDE0059BCAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846551471A63CEDE0059BCAD /* ReflectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectTests.swift; sourceTree = "<group>"; };
 		846551511A63D0250059BCAD /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		84977D4F1A65338E00D30F57 /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
+		84977D511A65363100D30F57 /* SettingsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMenu.swift; sourceTree = "<group>"; };
 		84A3472A1A63D93E0069C4FE /* toasty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = toasty.mp3; sourceTree = "<group>"; };
 		84A3472B1A63D93E0069C4FE /* unifont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = unifont.ttf; sourceTree = "<group>"; };
 		84AA3B941A63FD1D008381BF /* AKButtonFromLabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKButtonFromLabelNode.swift; sourceTree = "<group>"; };
@@ -133,6 +137,8 @@
 				846551311A63CEDE0059BCAD /* GameScene.swift */,
 				84BA0D031A63D18E00EEF896 /* MainMenu.swift */,
 				84AA3B941A63FD1D008381BF /* AKButtonFromLabelNode.swift */,
+				84977D4F1A65338E00D30F57 /* GameOver.swift */,
+				84977D511A65363100D30F57 /* SettingsMenu.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -250,8 +256,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				846551321A63CEDE0059BCAD /* GameScene.swift in Sources */,
+				84977D521A65363100D30F57 /* SettingsMenu.swift in Sources */,
 				84AA3B951A63FD1D008381BF /* AKButtonFromLabelNode.swift in Sources */,
 				846551341A63CEDE0059BCAD /* GameViewController.swift in Sources */,
+				84977D501A65338E00D30F57 /* GameOver.swift in Sources */,
 				8465512E1A63CEDE0059BCAD /* AppDelegate.swift in Sources */,
 				84BA0D041A63D18E00EEF896 /* MainMenu.swift in Sources */,
 			);
