@@ -23,8 +23,8 @@ class SettingsMenu: SKScene {
         
         self.backgroundColor = SKColor.blackColor()
         
-        if userDef.integerForKey("GameSpeed") != 0 {
-            gameSpeed = userDef.integerForKey("GameSpeed")
+        if userDef.integerForKey("Speed") != 0 {
+            gameSpeed = userDef.integerForKey("Speed")
             surprizeFreequence = userDef.integerForKey("SurprizeFreequence")
             cherrySize = userDef.integerForKey("CherrySize")
             gameMode = userDef.boolForKey("GameMode")
@@ -40,9 +40,9 @@ class SettingsMenu: SKScene {
         self.addChild(gameOverLabel)
         
         //Create settings fields(buttons and labels)
-        createSettingsButton(name: "speed", text: "Speed", h_position: self.frame.size.height - 200, value: &gameSpeed)
-        createSettingsButton(name: "surprizeFreequence", text: "Surprize", h_position: self.frame.size.height - 300, value: &surprizeFreequence)
-        createSettingsButton(name: "cherrySize", text: "Target Size", h_position: self.frame.size.height - 400, value: &cherrySize)
+        createSettingsButton(name: "Speed", text: "Speed", h_position: self.frame.size.height - 200, value: &gameSpeed)
+        createSettingsButton(name: "SurprizeFreequence", text: "Surprize", h_position: self.frame.size.height - 300, value: &surprizeFreequence)
+        createSettingsButton(name: "CherrySize", text: "Target Size", h_position: self.frame.size.height - 400, value: &cherrySize)
         
         //CREATE Back to main menu button
         var w:CGFloat = 60
@@ -57,15 +57,11 @@ class SettingsMenu: SKScene {
         backButton.fontColor = UIColor.blackColor()
         backButton.action = { [weak self] in
             if let strongSelf = self {
-                strongSelf.userDef.setInteger(strongSelf.gameSpeed, forKey: "GameSpeed")
-                strongSelf.userDef.setInteger(strongSelf.surprizeFreequence, forKey: "SurprizeFreequence")
-                strongSelf.userDef.setInteger(strongSelf.cherrySize, forKey: "CherrySize")
-                strongSelf.userDef.setBool(strongSelf.gameMode, forKey: "GameMode")
-                strongSelf.userDef.synchronize()
-                strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size))
+               strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size))
             } }
         backButton.createLabel()
         self.addChild(backButton)
+        
         
         //CREATE test button
         w = 100
@@ -78,6 +74,20 @@ class SettingsMenu: SKScene {
         testButton.fontName = "unifont"
         testButton.fillColor = UIColor.greenColor()
         testButton.fontColor = UIColor.blackColor()
+        testButton.action = { [weak self] in
+            if let strongSelf = self {
+                if strongSelf.gameMode == true {
+                    testButton.text = "Game Mode"
+                    strongSelf.gameMode = false
+                } else {
+                    testButton.text = "Test Mode"
+                    strongSelf.gameMode = true
+                }
+                println(strongSelf.gameMode)
+                let userDef = NSUserDefaults.standardUserDefaults()
+                userDef.setBool(strongSelf.gameMode, forKey: "GameMode")
+                userDef.synchronize()
+              } }
         testButton.createLabel()
         self.addChild(testButton)
         
@@ -117,6 +127,9 @@ class SettingsMenu: SKScene {
         set_PlusButton.action = {
                                      ++value
                                      set_ValueLabel.text = String(value)
+                                     let userDef = NSUserDefaults.standardUserDefaults()
+                                     userDef.setInteger(value, forKey: name)
+                                     userDef.synchronize()
                                 }
         set_PlusButton.createLabel()
         self.addChild(set_PlusButton)
@@ -132,7 +145,11 @@ class SettingsMenu: SKScene {
         set_MinusButton.fontColor = UIColor.blackColor()
         set_MinusButton.action = {
                                      --value
+                                     if value < 1 { value = 1 }
                                      set_ValueLabel.text = String(value)
+                                     let userDef = NSUserDefaults.standardUserDefaults()
+                                     userDef.setInteger(value, forKey: name)
+                                     userDef.synchronize()
                                  }
         set_MinusButton.createLabel()
         self.addChild(set_MinusButton)

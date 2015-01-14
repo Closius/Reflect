@@ -42,10 +42,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override init(size: CGSize){
         super.init(size: size)
-        
-    //    speedVector = CGFloat(usedfDef.integerForKey("SpeedGame"))
-    //    cherrySize = CGFloat(usedfDef.integerForKey("CherrySize"))
-    //    hitlerAppearCount = usedfDef.integerForKey("SurpriseFreq")
+    
+        speedVector = CGFloat(usedfDef.integerForKey("Speed"))
+        cherrySize = CGFloat(usedfDef.integerForKey("CherrySize"))
+        hitlerAppearCount = usedfDef.integerForKey("SurprizeFreequence")
         
         self.physicsWorld.contactDelegate = self
         
@@ -162,9 +162,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             score = 0
             (self.childNodeWithName("LabelGame") as SKLabelNode).text = "Score: " + String(score) + " Cherries: " + String(scoreCherry)
             
-      //      if usedfDef.boolForKey("TestOrGame") == false {
+            if usedfDef.boolForKey("GameMode") == false {
                 self.view?.presentScene(GameOver(size: CGSizeMake(self.frame.size.width, self.frame.size.height)))
-      //      }
+            }
         }
         
         if firstBody.categoryBitMask == ballCategory && secondBody.categoryBitMask == paddleCategory {
@@ -225,6 +225,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.childNodeWithName(ballCategoryName)?.physicsBody?.applyImpulse(CGVectorMake(0, speedVector))
         }
     }
+    
+//    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+//        
+//        if usedfDef.boolForKey("GameMode") == false {
+//            self.view?.presentScene(MainMenu(size: CGSizeMake(self.frame.size.width, self.frame.size.height)))
+//        }
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
