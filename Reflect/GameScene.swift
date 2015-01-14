@@ -32,7 +32,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var score = 0
     var scoreCherry = 0
     var hitlerAppear = 0
-    var hitlerAppearCount = 2
+    var hitlerAppearCount = 10
     var loose = false
     
     let ballCategory:UInt32 = 0x1 << 0
@@ -42,10 +42,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override init(size: CGSize){
         super.init(size: size)
-    
-        speedVector = CGFloat(usedfDef.integerForKey("Speed"))
-        cherrySize = CGFloat(usedfDef.integerForKey("CherrySize"))
-        hitlerAppearCount = usedfDef.integerForKey("SurprizeFreequence")
+     
+        if usedfDef.integerForKey("Speed") != 0 {
+           speedVector = CGFloat(usedfDef.integerForKey("Speed"))
+           cherrySize = CGFloat(usedfDef.integerForKey("CherrySize"))
+           hitlerAppearCount = usedfDef.integerForKey("SurprizeFreequence")
+        }
         
         self.physicsWorld.contactDelegate = self
         
