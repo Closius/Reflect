@@ -48,6 +48,16 @@ class MainMenu: SKScene {
         startGameButton.fontName = "unifont"
         startGameButton.fillColor = UIColor.greenColor()
         startGameButton.fontColor = UIColor.blackColor()
+        // Touch events tracking implemented through closures.
+        // Be careful: When you need to call "self"'s methods in property 'action' of the object of this class
+        // you need capture "self"
+        // [weak self] in
+        // and unwrap it by optional binding
+        // if let strongSelf = self { strongSelf.SOME METHOD... }
+        startGameButton.action = { [weak self] in
+            if let strongSelf = self {
+                strongSelf.view?.presentScene(GameScene(size: strongSelf.frame.size))
+            } }
         startGameButton.createLabel()
         self.addChild(startGameButton)
         
@@ -60,7 +70,10 @@ class MainMenu: SKScene {
         settingsButton.fontName = "unifont"
         settingsButton.fillColor = UIColor.greenColor()
         settingsButton.fontColor = UIColor.blackColor()
-        settingsButton.action = { [weak self] in self.view?.presentScene(SettingsMenu(size: CGSizeMake(self.frame.width, self.frame.height))) }
+        settingsButton.action = { [weak self] in
+            if let strongSelf = self {
+                strongSelf.view?.presentScene(SettingsMenu(size: strongSelf.frame.size))
+            } }
         settingsButton.createLabel()
         self.addChild(settingsButton)
         
@@ -73,15 +86,12 @@ class MainMenu: SKScene {
         aboutButton.fontName = "unifont"
         aboutButton.fillColor = UIColor.greenColor()
         aboutButton.fontColor = UIColor.blackColor()
+        aboutButton.action = { [weak self] in
+            if let strongSelf = self {
+                strongSelf.view?.presentScene(SettingsMenu(size: strongSelf.frame.size))
+            } }
         aboutButton.createLabel()
         self.addChild(aboutButton)
-        
-        
-      
-        
-        
-        
-        
 
     }
     
@@ -92,24 +102,24 @@ class MainMenu: SKScene {
     
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        
-        var touch: UITouch = touches.allObjects[0] as UITouch
-        var location: CGPoint = touch.locationInNode(self)
-    
-        if self.childNodeWithName(startGameButtonCategoryName)?.containsPoint(location) == true {
-            self.view?.presentScene(GameScene(size: CGSizeMake(self.frame.width, self.frame.height)))
-        }
-        
-        if self.childNodeWithName(settingsButtonCategoryName)?.containsPoint(location) == true {
-            self.view?.presentScene(SettingsMenu(size: CGSizeMake(self.frame.width, self.frame.height)))
-        }
-        
-        if self.childNodeWithName(aboutButtonCategoryName)?.containsPoint(location) == true {
-            println(aboutButtonCategoryName)
-        }
-        
-    }
+//    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+//        
+//        var touch: UITouch = touches.allObjects[0] as UITouch
+//        var location: CGPoint = touch.locationInNode(self)
+//    
+//        if self.childNodeWithName(startGameButtonCategoryName)?.containsPoint(location) == true {
+//            self.view?.presentScene(GameScene(size: CGSizeMake(self.frame.width, self.frame.height)))
+//        }
+//        
+//        if self.childNodeWithName(settingsButtonCategoryName)?.containsPoint(location) == true {
+//            self.view?.presentScene(SettingsMenu(size: CGSizeMake(self.frame.width, self.frame.height)))
+//        }
+//        
+//        if self.childNodeWithName(aboutButtonCategoryName)?.containsPoint(location) == true {
+//            println(aboutButtonCategoryName)
+//        }
+//        
+//    }
  
     
     override func didMoveToView(view: SKView) {

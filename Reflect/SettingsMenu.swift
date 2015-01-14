@@ -13,12 +13,6 @@ class SettingsMenu: SKScene {
    
     let userDef = NSUserDefaults.standardUserDefaults()
     
-    // Names of buttons
-    // Indexes: (Plus, Minus, Value)
-    let speed_array_CategoryName:NSArray?
-    let surprizeFreequence_array_CategoryName:NSArray?
-    let cherrySize_array_CategoryName:NSArray?
-    
     var gameSpeed:Int = 2
     var surprizeFreequence: Int = 10
     var cherrySize: Int = 50
@@ -36,7 +30,7 @@ class SettingsMenu: SKScene {
             gameMode = userDef.boolForKey("GameMode")
         }
         
-        //CREATE WELCOME LABEL
+        //CREATE SETTINGS LABEL
         var gameOverLabel = SKLabelNode(fontNamed: "unifont")
         gameOverLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 100)
         gameOverLabel.fontSize = 30
@@ -46,9 +40,9 @@ class SettingsMenu: SKScene {
         self.addChild(gameOverLabel)
         
         //Create settings fields(buttons and labels)
-        speed_array_CategoryName = createSettingsButton(name: "speed", text: "Speed", h_position: self.frame.size.height - 200, value: gameSpeed)
-        surprizeFreequence_array_CategoryName = createSettingsButton(name: "surprizeFreequence", text: "Surprize", h_position: self.frame.size.height - 300, value: surprizeFreequence)
-        cherrySize_array_CategoryName = createSettingsButton(name: "cherrySize", text: "Target Size", h_position: self.frame.size.height - 400, value: cherrySize)
+        createSettingsButton(name: "speed", text: "Speed", h_position: self.frame.size.height - 200, value: &gameSpeed)
+        createSettingsButton(name: "surprizeFreequence", text: "Surprize", h_position: self.frame.size.height - 300, value: &surprizeFreequence)
+        createSettingsButton(name: "cherrySize", text: "Target Size", h_position: self.frame.size.height - 400, value: &cherrySize)
         
         //CREATE Back to main menu button
         var w:CGFloat = 60
@@ -61,6 +55,15 @@ class SettingsMenu: SKScene {
         backButton.fontName = "unifont"
         backButton.fillColor = UIColor.greenColor()
         backButton.fontColor = UIColor.blackColor()
+        backButton.action = { [weak self] in
+            if let strongSelf = self {
+                strongSelf.userDef.setInteger(strongSelf.gameSpeed, forKey: "GameSpeed")
+                strongSelf.userDef.setInteger(strongSelf.surprizeFreequence, forKey: "SurprizeFreequence")
+                strongSelf.userDef.setInteger(strongSelf.cherrySize, forKey: "CherrySize")
+                strongSelf.userDef.setBool(strongSelf.gameMode, forKey: "GameMode")
+                strongSelf.userDef.synchronize()
+                strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size))
+            } }
         backButton.createLabel()
         self.addChild(backButton)
         
@@ -78,133 +81,71 @@ class SettingsMenu: SKScene {
         testButton.createLabel()
         self.addChild(testButton)
         
-        
-        
     }
     
-    func createSettingsButton( #name: String, text: String, h_position: CGFloat, value: Int) -> NSArray {
-        
+    func createSettingsButton( #name: String, text: String, h_position: CGFloat, inout value: Int) {
+                                                                              // inout - parameter in function by reference
         var fontName = "unifont"
         var font_value_Size:CGFloat = 30
         var font_Value:UIFont = UIFont(name: "unifont", size: font_value_Size)!
-        
+       
         let plus_CategoryName                 = name + "_Plus_CategoryName"
         let minus_CategoryName                = name + "_Minus_CategoryName"
         let value_CategoryName                = name + "_Value_CategoryName"
         
+        //CREATE VALUE
+        var set_ValueLabel = SKLabelNode(fontNamed: fontName)
+        set_ValueLabel.position = CGPointMake(self.frame.size.width / 2, h_position - font_Value.capHeight/2)
+        set_ValueLabel.fontSize = font_value_Size
+        set_ValueLabel.fontColor = SKColor.greenColor()
+        set_ValueLabel.text = String(value)
+        set_ValueLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        set_ValueLabel.name = value_CategoryName
+        self.addChild(set_ValueLabel)
+
         //PLUS BUTTON
         var w:CGFloat = 40
         var h:CGFloat = 40
-        var speed_PlusButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
-        speed_PlusButton.name = plus_CategoryName
-        speed_PlusButton.position = CGPointMake(self.frame.size.width - (self.frame.size.width / 5), h_position)
-        speed_PlusButton.text = "+"
-        speed_PlusButton.fontSize = 30
-        speed_PlusButton.fontName = "unifont"
-        speed_PlusButton.fillColor = UIColor.greenColor()
-        speed_PlusButton.fontColor = UIColor.blackColor()
-        speed_PlusButton.createLabel()
-        self.addChild(speed_PlusButton)
-        
-        //CREATE LABEL
-        var speedLabel = SKLabelNode(fontNamed: "unifont")
-        speedLabel.position = CGPointMake(self.frame.size.width / 2, h_position + h/2)
-        speedLabel.fontSize = 20
-        speedLabel.fontColor = SKColor.greenColor()
-        speedLabel.text = text
-        speedLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-        self.addChild(speedLabel)
-        
-        //CREATE VALUE
-        var speed_ValueLabel = SKLabelNode(fontNamed: fontName)
-        speed_ValueLabel.position = CGPointMake(self.frame.size.width / 2, h_position - font_Value.capHeight/2)
-        speed_ValueLabel.fontSize = font_value_Size
-        speed_ValueLabel.fontColor = SKColor.greenColor()
-        speed_ValueLabel.text = String(value)
-        speed_ValueLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-        speed_ValueLabel.name = value_CategoryName
-        self.addChild(speed_ValueLabel)
+        var set_PlusButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        set_PlusButton.name = plus_CategoryName
+        set_PlusButton.position = CGPointMake(self.frame.size.width - (self.frame.size.width / 5), h_position)
+        set_PlusButton.text = "+"
+        set_PlusButton.fontSize = 30
+        set_PlusButton.fontName = "unifont"
+        set_PlusButton.fillColor = UIColor.greenColor()
+        set_PlusButton.fontColor = UIColor.blackColor()
+        set_PlusButton.action = {
+                                     ++value
+                                     set_ValueLabel.text = String(value)
+                                }
+        set_PlusButton.createLabel()
+        self.addChild(set_PlusButton)
         
         //MINUS BUTTON
-        var speed_MinusButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
-        speed_MinusButton.name = minus_CategoryName
-        speed_MinusButton.position = CGPointMake(self.frame.size.width / 5, h_position)
-        speed_MinusButton.text = "-"
-        speed_MinusButton.fontSize = 30
-        speed_MinusButton.fontName = "unifont"
-        speed_MinusButton.fillColor = UIColor.greenColor()
-        speed_MinusButton.fontColor = UIColor.blackColor()
-        speed_MinusButton.createLabel()
-        self.addChild(speed_MinusButton)
+        var set_MinusButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        set_MinusButton.name = minus_CategoryName
+        set_MinusButton.position = CGPointMake(self.frame.size.width / 5, h_position)
+        set_MinusButton.text = "-"
+        set_MinusButton.fontSize = 30
+        set_MinusButton.fontName = "unifont"
+        set_MinusButton.fillColor = UIColor.greenColor()
+        set_MinusButton.fontColor = UIColor.blackColor()
+        set_MinusButton.action = {
+                                     --value
+                                     set_ValueLabel.text = String(value)
+                                 }
+        set_MinusButton.createLabel()
+        self.addChild(set_MinusButton)
         
-        return [plus_CategoryName, minus_CategoryName, value_CategoryName]
-
+        //CREATE LABEL
+        var setLabel = SKLabelNode(fontNamed: "unifont")
+        setLabel.position = CGPointMake(self.frame.size.width / 2, h_position + h/2)
+        setLabel.fontSize = 20
+        setLabel.fontColor = SKColor.greenColor()
+        setLabel.text = text
+        setLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        self.addChild(setLabel)
     }
-
-    
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        
-        var touch: UITouch = touches.allObjects[0] as UITouch
-        var location: CGPoint = touch.locationInNode(self)
-    // Back to main menu
-        if self.childNodeWithName("BackButton")?.containsPoint(location) == true {
-            self.view?.presentScene(MainMenu(size: CGSizeMake(self.frame.width, self.frame.height)))
-            
-            userDef.setInteger(gameSpeed, forKey: "GameSpeed")
-            userDef.setInteger(surprizeFreequence, forKey: "SurprizeFreequence")
-            userDef.setInteger(cherrySize, forKey: "CherrySize")
-            userDef.setBool(gameMode, forKey: "GameMode")
-            userDef.synchronize()
-        }
-        
-    // Test/Game mode button
-        if self.childNodeWithName("TestButton")?.containsPoint(location) == true {
-            if gameMode == true {
-                (self.childNodeWithName("TestButton")! as AKButtonFromLabelNode).text = "Game Mode"
-                println(gameMode)
-                gameMode = false
-            } else {
-                (self.childNodeWithName("TestButton")! as AKButtonFromLabelNode).text = "Test Mode"
-                println(gameMode)
-                gameMode = true
-            }
-        }
-        
-    // Plus and Minus and values
-    //-------------------------------------
-        if self.childNodeWithName(speed_array_CategoryName!.objectAtIndex(0) as NSString)!.containsPoint(location) == true {
-            ++gameSpeed
-            (self.childNodeWithName(speed_array_CategoryName!.objectAtIndex(2) as NSString)! as SKLabelNode).text = String(gameSpeed)
-        }
-        if self.childNodeWithName(speed_array_CategoryName!.objectAtIndex(1) as NSString)!.containsPoint(location) == true {
-            --gameSpeed
-            if gameSpeed <= 0 { gameSpeed = 1 }
-            (self.childNodeWithName(speed_array_CategoryName!.objectAtIndex(2) as NSString)! as SKLabelNode).text = String(gameSpeed)
-        }
-    //-------------------------------------
-        if self.childNodeWithName(surprizeFreequence_array_CategoryName!.objectAtIndex(0) as NSString)!.containsPoint(location) == true {
-            ++surprizeFreequence
-            (self.childNodeWithName(surprizeFreequence_array_CategoryName!.objectAtIndex(2) as NSString)! as SKLabelNode).text = String(surprizeFreequence)
-        }
-        if self.childNodeWithName(surprizeFreequence_array_CategoryName!.objectAtIndex(1) as NSString)!.containsPoint(location) == true {
-            --surprizeFreequence
-            if surprizeFreequence <= 1 { surprizeFreequence = 1 }
-            (self.childNodeWithName(surprizeFreequence_array_CategoryName!.objectAtIndex(2) as NSString)! as SKLabelNode).text = String(surprizeFreequence)
-        }
-    //-------------------------------------
-        if self.childNodeWithName(cherrySize_array_CategoryName!.objectAtIndex(0) as NSString)!.containsPoint(location) == true {
-            ++cherrySize
-            (self.childNodeWithName(cherrySize_array_CategoryName!.objectAtIndex(2) as NSString)! as SKLabelNode).text = String(cherrySize)
-        }
-        if self.childNodeWithName(cherrySize_array_CategoryName!.objectAtIndex(1) as NSString)!.containsPoint(location) == true {
-            --cherrySize
-            if cherrySize <= 0 { cherrySize = 0 }
-            (self.childNodeWithName(cherrySize_array_CategoryName!.objectAtIndex(2) as NSString)! as SKLabelNode).text = String(cherrySize)
-        }
-    //-------------------------------------
-
-    }
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

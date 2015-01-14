@@ -6,6 +6,20 @@
 //  Copyright (c) 2015 Mamka Admina. All rights reserved.
 //
 
+// Touch events tracking implemented through closures.
+// Be careful: When you need to call "self"'s methods in property 'action' of the object of this class
+// you need capture "self"
+// [weak self] in
+// and unwrap it by optional binding
+// if let strongSelf = self { strongSelf.SOME METHOD... }
+//
+// Example:
+// settingsButton.action = { [weak self] in
+// if let strongSelf = self {
+//     strongSelf.view?.presentScene(SettingsMenu(size: strongSelf.frame.size))
+// } }
+
+
 import SpriteKit
 
 class AKButtonFromLabelNode: SKShapeNode, SKSceneDelegate {
@@ -52,6 +66,7 @@ class AKButtonFromLabelNode: SKShapeNode, SKSceneDelegate {
         
         super.strokeColor = super.fillColor
         self.userInteractionEnabled = true   // Recive touch events!!!!!
+        
         
     }
     
