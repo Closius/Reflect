@@ -23,13 +23,18 @@ class SettingsMenu: SKScene {
         
         self.backgroundColor = SKColor.blackColor()
         
-        if userDef.integerForKey("Speed") != 0 {
+        if userDef.integerForKey("Speed") == 0 {
+            userDef.setInteger(gameSpeed, forKey: "Speed")
+            userDef.setInteger(surprizeFreequence, forKey: "SurprizeFreequence")
+            userDef.setInteger(cherrySize, forKey: "CherrySize")
+            userDef.setBool(gameMode, forKey: "GameMode")
+        } else {
             gameSpeed = userDef.integerForKey("Speed")
             surprizeFreequence = userDef.integerForKey("SurprizeFreequence")
             cherrySize = userDef.integerForKey("CherrySize")
             gameMode = userDef.boolForKey("GameMode")
         }
-        
+
         //CREATE SETTINGS LABEL
         var gameOverLabel = SKLabelNode(fontNamed: "unifont")
         gameOverLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 100)
@@ -57,11 +62,12 @@ class SettingsMenu: SKScene {
         backButton.fontColor = UIColor.blackColor()
         backButton.action = { [weak self] in
             if let strongSelf = self {
-               strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size))
+                let userDef = NSUserDefaults.standardUserDefaults()
+                userDef.setBool(strongSelf.gameMode, forKey: "GameMode")
+                strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size))
             } }
         backButton.createLabel()
         self.addChild(backButton)
-        
         
         //CREATE test button
         w = 100
@@ -77,20 +83,15 @@ class SettingsMenu: SKScene {
         testButton.action = { [weak self] in
             if let strongSelf = self {
                 if strongSelf.gameMode == true {
-                    testButton.text = "Game Mode"
+                    (testButton.childNodeWithName( testButton.name! + "_label") as SKLabelNode).text = "Test Mode"
                     strongSelf.gameMode = false
                 } else {
-                    testButton.text = "Test Mode"
+                    (testButton.childNodeWithName( testButton.name! + "_label") as SKLabelNode).text = "Game Mode"
                     strongSelf.gameMode = true
                 }
-                println(strongSelf.gameMode)
-                let userDef = NSUserDefaults.standardUserDefaults()
-                userDef.setBool(strongSelf.gameMode, forKey: "GameMode")
-                userDef.synchronize()
-              } }
+            } }
         testButton.createLabel()
         self.addChild(testButton)
-        
     }
     
     func createSettingsButton( #name: String, text: String, h_position: CGFloat, inout value: Int) {

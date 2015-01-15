@@ -25,8 +25,25 @@ class GameOver: SKScene {
         gameOverLabel.fontColor = SKColor.greenColor()
         gameOverLabel.text = "GAME OVER"
         gameOverLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-        gameOverLabel.name = "GameOver"
         self.addChild(gameOverLabel)
+        
+        //CREATE score LABEL
+        var scoreLabel = SKLabelNode(fontNamed: "unifont")
+        scoreLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 200)
+        scoreLabel.fontSize = 22
+        scoreLabel.fontColor = SKColor.greenColor()
+        scoreLabel.text = "Your score: " + String(userDef.integerForKey("LastScore"))
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        self.addChild(scoreLabel)
+        
+        //CREATE cherry LABEL
+        var cherryScoreLabel = SKLabelNode(fontNamed: "unifont")
+        cherryScoreLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 225)
+        cherryScoreLabel.fontSize = 22
+        cherryScoreLabel.fontColor = SKColor.greenColor()
+        cherryScoreLabel.text = "Bulbasaurus catched: " + String(userDef.integerForKey("LastScoreCherry"))
+        cherryScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        self.addChild(cherryScoreLabel)
     }
 
     

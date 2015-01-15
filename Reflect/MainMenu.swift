@@ -11,8 +11,6 @@ import AVFoundation
 
 class MainMenu: SKScene {
     
-    let userDef = NSUserDefaults.standardUserDefaults()
-    
     var eventMusicPlayer = AVAudioPlayer()
     let toastyMusicUrl = NSBundle.mainBundle().URLForResource("toasty", withExtension: "mp3")
     
@@ -88,7 +86,7 @@ class MainMenu: SKScene {
         aboutButton.fontColor = UIColor.blackColor()
         aboutButton.action = { [weak self] in
             if let strongSelf = self {
-                strongSelf.view?.presentScene(SettingsMenu(size: strongSelf.frame.size))
+                strongSelf.view?.presentScene(About(size: strongSelf.frame.size))
             } }
         aboutButton.createLabel()
         self.addChild(aboutButton)

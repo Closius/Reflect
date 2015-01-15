@@ -40,13 +40,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let paddleCategory:UInt32 = 0x1 << 2
     let cherryCategory:UInt32 = 0x1 << 3
     
+    let gameMode = true
+    
     override init(size: CGSize){
         super.init(size: size)
      
-        if usedfDef.integerForKey("Speed") != 0 {
-           speedVector = CGFloat(usedfDef.integerForKey("Speed"))
-           cherrySize = CGFloat(usedfDef.integerForKey("CherrySize"))
-           hitlerAppearCount = usedfDef.integerForKey("SurprizeFreequence")
+        if usedfDef.integerForKey("Speed") == 0 {
+            usedfDef.setInteger(Int(speedVector), forKey: "Speed")
+            usedfDef.setInteger(hitlerAppearCount, forKey: "SurprizeFreequence")
+            usedfDef.setInteger(Int(cherrySize), forKey: "CherrySize")
+            usedfDef.setBool(gameMode, forKey: "GameMode")
+        } else {
+            speedVector = CGFloat(usedfDef.integerForKey("Speed"))
+            hitlerAppearCount = usedfDef.integerForKey("SurprizeFreequence")
+            cherrySize = CGFloat(usedfDef.integerForKey("CherrySize"))
+            gameMode = usedfDef.boolForKey("GameMode")
         }
         
         self.physicsWorld.contactDelegate = self
@@ -97,7 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         labelGame.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 35)
         labelGame.fontSize = 20
         labelGame.fontColor = SKColor.greenColor()
-        labelGame.text = "Score: 0 Cherries: 0"
+        labelGame.text = "Score: 0 Bulbasaur: 0"
         labelGame.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
         labelGame.name = "LabelGame"
         self.addChild(labelGame)
@@ -162,9 +170,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             usedfDef.synchronize()
             
             score = 0
-            (self.childNodeWithName("LabelGame") as SKLabelNode).text = "Score: " + String(score) + " Cherries: " + String(scoreCherry)
+            (self.childNodeWithName("LabelGame") as SKLabelNode).text = "Score: " + String(score) + " Bulbasaur: " + String(scoreCherry)
             
-            if usedfDef.boolForKey("GameMode") == false {
+            if gameMode == true {
                 self.view?.presentScene(GameOver(size: CGSizeMake(self.frame.size.width, self.frame.size.height)))
             }
         }
@@ -172,13 +180,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if firstBody.categoryBitMask == ballCategory && secondBody.categoryBitMask == paddleCategory {
             println("+1!")
             score += 1
-            (self.childNodeWithName("LabelGame") as SKLabelNode).text = "Score: " + String(score) + " Cherries: " + String(scoreCherry)
+            (self.childNodeWithName("LabelGame") as SKLabelNode).text = "Score: " + String(score) + " Bulbasaur: " + String(scoreCherry)
         }
         
         if firstBody.categoryBitMask == ballCategory && secondBody.categoryBitMask == cherryCategory {
             println("+Plus1!" + String(scoreCherry))
             scoreCherry += 1
-            (self.childNodeWithName("LabelGame") as SKLabelNode).text = "Score: " + String(score) + " Cherries: " + String(scoreCherry)
+            (self.childNodeWithName("LabelGame") as SKLabelNode).text = "Score: " + String(score) + " Bulbasaur: " + String(scoreCherry)
             (self.childNodeWithName(cherryCategoryName) as SKSpriteNode).zPosition = 20
             let action = SKAction.moveTo(CGPointMake(
                 CGFloat(randRange(20, upper: Int(self.frame.size.width - 20))),
