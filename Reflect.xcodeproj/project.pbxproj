@@ -74,6 +74,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		844201101A6A7A3300E7FC31 /* Sup. Classes */ = {
+			isa = PBXGroup;
+			children = (
+				84AA3B941A63FD1D008381BF /* AKButtonFromLabelNode.swift */,
+			);
+			name = "Sup. Classes";
+			sourceTree = "<group>";
+		};
 		8465511F1A63CEDE0059BCAD = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +104,7 @@
 		8465512A1A63CEDE0059BCAD /* Reflect */ = {
 			isa = PBXGroup;
 			children = (
+				844201101A6A7A3300E7FC31 /* Sup. Classes */,
 				84A347291A63D90E0069C4FE /* SuppFiles */,
 				846551531A63D0F70059BCAD /* Scenes */,
 				8465512D1A63CEDE0059BCAD /* AppDelegate.swift */,
@@ -138,7 +147,6 @@
 			children = (
 				846551311A63CEDE0059BCAD /* GameScene.swift */,
 				84BA0D031A63D18E00EEF896 /* MainMenu.swift */,
-				84AA3B941A63FD1D008381BF /* AKButtonFromLabelNode.swift */,
 				84977D4F1A65338E00D30F57 /* GameOver.swift */,
 				84977D511A65363100D30F57 /* SettingsMenu.swift */,
 				847D9A541A67F2C400ADBEF1 /* About.swift */,

@@ -64,18 +64,27 @@ class AKButtonFromLabelNode: SKShapeNode, SKSceneDelegate {
     override init() {
         super.init()
         
-        super.strokeColor = super.fillColor
+        super.fillColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.7)
+        super.strokeColor = UIColor.greenColor()
         self.userInteractionEnabled = true   // Recive touch events!!!!!
-        
         
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        
+        super.fillColor = UIColor.greenColor()
+        
+    }
     
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        var touch: UITouch = touches.allObjects[0] as UITouch
+        var location: CGPoint = touch.locationInNode(self.parent)
+
+        if self.containsPoint(location) {
+           action!()
+        }
         
-      //  println(super.name)
-        action!()
-        
+        super.fillColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.7)
         
     }
     

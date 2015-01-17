@@ -44,7 +44,6 @@ class MainMenu: SKScene {
         startGameButton.text = "Start Game"
         startGameButton.fontSize = 20
         startGameButton.fontName = "unifont"
-        startGameButton.fillColor = UIColor.greenColor()
         startGameButton.fontColor = UIColor.blackColor()
         // Touch events tracking implemented through closures.
         // Be careful: When you need to call "self"'s methods in property 'action' of the object of this class
@@ -66,7 +65,6 @@ class MainMenu: SKScene {
         settingsButton.text = "Settings"
         settingsButton.fontSize = 20
         settingsButton.fontName = "unifont"
-        settingsButton.fillColor = UIColor.greenColor()
         settingsButton.fontColor = UIColor.blackColor()
         settingsButton.action = { [weak self] in
             if let strongSelf = self {
@@ -82,7 +80,6 @@ class MainMenu: SKScene {
         aboutButton.text = "About"
         aboutButton.fontSize = 20
         aboutButton.fontName = "unifont"
-        aboutButton.fillColor = UIColor.greenColor()
         aboutButton.fontColor = UIColor.blackColor()
         aboutButton.action = { [weak self] in
             if let strongSelf = self {
@@ -92,33 +89,6 @@ class MainMenu: SKScene {
         self.addChild(aboutButton)
 
     }
-    
-   
-    
-    override func willMoveFromView(view: SKView) {
-        
-    
-    }
-    
-//    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-//        
-//        var touch: UITouch = touches.allObjects[0] as UITouch
-//        var location: CGPoint = touch.locationInNode(self)
-//    
-//        if self.childNodeWithName(startGameButtonCategoryName)?.containsPoint(location) == true {
-//            self.view?.presentScene(GameScene(size: CGSizeMake(self.frame.width, self.frame.height)))
-//        }
-//        
-//        if self.childNodeWithName(settingsButtonCategoryName)?.containsPoint(location) == true {
-//            self.view?.presentScene(SettingsMenu(size: CGSizeMake(self.frame.width, self.frame.height)))
-//        }
-//        
-//        if self.childNodeWithName(aboutButtonCategoryName)?.containsPoint(location) == true {
-//            println(aboutButtonCategoryName)
-//        }
-//        
-//    }
- 
     
     override func didMoveToView(view: SKView) {
         eventMusicPlayer = AVAudioPlayer(contentsOfURL: toastyMusicUrl, error: nil)

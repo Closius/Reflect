@@ -58,7 +58,6 @@ class SettingsMenu: SKScene {
         backButton.text = "Back"
         backButton.fontSize = 20
         backButton.fontName = "unifont"
-        backButton.fillColor = UIColor.greenColor()
         backButton.fontColor = UIColor.blackColor()
         backButton.action = { [weak self] in
             if let strongSelf = self {
@@ -78,7 +77,6 @@ class SettingsMenu: SKScene {
         gameMode == true ? (testButton.text = "Game Mode") : (testButton.text = "Test Mode")
         testButton.fontSize = 20
         testButton.fontName = "unifont"
-        testButton.fillColor = UIColor.greenColor()
         testButton.fontColor = UIColor.blackColor()
         testButton.action = { [weak self] in
             if let strongSelf = self {
@@ -123,7 +121,6 @@ class SettingsMenu: SKScene {
         set_PlusButton.text = "+"
         set_PlusButton.fontSize = 30
         set_PlusButton.fontName = "unifont"
-        set_PlusButton.fillColor = UIColor.greenColor()
         set_PlusButton.fontColor = UIColor.blackColor()
         set_PlusButton.action = {
                                      ++value
@@ -142,7 +139,6 @@ class SettingsMenu: SKScene {
         set_MinusButton.text = "-"
         set_MinusButton.fontSize = 30
         set_MinusButton.fontName = "unifont"
-        set_MinusButton.fillColor = UIColor.greenColor()
         set_MinusButton.fontColor = UIColor.blackColor()
         set_MinusButton.action = {
                                      --value

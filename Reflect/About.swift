@@ -16,9 +16,6 @@ class About: SKScene {
         
         self.backgroundColor = SKColor.blackColor()
         
-        
-        
-        
         //CREATE HITLER
         var aboutImage = SKSpriteNode(imageNamed: "forAbout")
         aboutImage.size = CGSizeMake(200, 200)
@@ -63,9 +60,7 @@ class About: SKScene {
         aboutLabel4.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
         self.addChild(aboutLabel4)
 
-
     }
-    
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         
