@@ -63,7 +63,7 @@ class SettingsMenu: SKScene {
             if let strongSelf = self {
                 let userDef = NSUserDefaults.standardUserDefaults()
                 userDef.setBool(strongSelf.gameMode, forKey: "GameMode")
-                strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size))
+                strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size), transition: SKTransition.fadeWithDuration(0.3))
             } }
         backButton.createLabel()
         self.addChild(backButton)

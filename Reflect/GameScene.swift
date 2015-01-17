@@ -14,7 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let usedfDef = NSUserDefaults.standardUserDefaults()
     
     var eventMusicPlayer = AVAudioPlayer()
-    let toastyMusicUrl = NSBundle.mainBundle().URLForResource("toasty", withExtension: "mp3")
+    let toastyMusicUrl = NSBundle.mainBundle().URLForResource("toasty", withExtension: "wav")
     
     let ballCategoryName = "Ball"
     let radiusBall:CGFloat = 10

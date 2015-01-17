@@ -12,7 +12,7 @@ import AVFoundation
 class MainMenu: SKScene {
     
     var eventMusicPlayer = AVAudioPlayer()
-    let toastyMusicUrl = NSBundle.mainBundle().URLForResource("toasty", withExtension: "mp3")
+    let toastyMusicUrl = NSBundle.mainBundle().URLForResource("game", withExtension: "mp3")
     
     // Names of buttons
     let startGameButtonCategoryName     = "StartGameButton"
@@ -53,7 +53,7 @@ class MainMenu: SKScene {
         // if let strongSelf = self { strongSelf.SOME METHOD... }
         startGameButton.action = { [weak self] in
             if let strongSelf = self {
-                strongSelf.view?.presentScene(GameScene(size: strongSelf.frame.size))
+                strongSelf.view?.presentScene(GameScene(size: strongSelf.frame.size), transition: SKTransition.fadeWithDuration(0.3))
             } }
         startGameButton.createLabel()
         self.addChild(startGameButton)
@@ -68,7 +68,7 @@ class MainMenu: SKScene {
         settingsButton.fontColor = UIColor.blackColor()
         settingsButton.action = { [weak self] in
             if let strongSelf = self {
-                strongSelf.view?.presentScene(SettingsMenu(size: strongSelf.frame.size))
+                strongSelf.view?.presentScene(SettingsMenu(size: strongSelf.frame.size), transition: SKTransition.fadeWithDuration(0.3))
             } }
         settingsButton.createLabel()
         self.addChild(settingsButton)
@@ -83,18 +83,19 @@ class MainMenu: SKScene {
         aboutButton.fontColor = UIColor.blackColor()
         aboutButton.action = { [weak self] in
             if let strongSelf = self {
-                strongSelf.view?.presentScene(About(size: strongSelf.frame.size))
+                strongSelf.view?.presentScene(About(size: strongSelf.frame.size), transition: SKTransition.fadeWithDuration(0.3))
             } }
         aboutButton.createLabel()
         self.addChild(aboutButton)
 
     }
     
-    override func didMoveToView(view: SKView) {
-        eventMusicPlayer = AVAudioPlayer(contentsOfURL: toastyMusicUrl, error: nil)
-        eventMusicPlayer.numberOfLoops = 0
-        eventMusicPlayer.prepareToPlay()
-    }
+//    override func didMoveToView(view: SKView) {
+//        eventMusicPlayer = AVAudioPlayer(contentsOfURL: toastyMusicUrl, error: nil)
+//        eventMusicPlayer.numberOfLoops = -1
+//        eventMusicPlayer.prepareToPlay()
+//        eventMusicPlayer.play()
+//    }
     
     func randRange (lower: Int , upper: Int) -> Int {
         return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))

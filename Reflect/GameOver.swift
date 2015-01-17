@@ -8,10 +8,15 @@
 
 import UIKit
 import SpriteKit
+import AVFoundation
 
 class GameOver: SKScene {
     
     let userDef = NSUserDefaults.standardUserDefaults()
+    
+    var eventMusicPlayer = AVAudioPlayer()
+    let toastyMusicUrl = NSBundle.mainBundle().URLForResource("forgoth", withExtension: "mp3")
+    
     
     override init(size: CGSize){
         super.init(size: size)
@@ -44,12 +49,36 @@ class GameOver: SKScene {
         cherryScoreLabel.text = "Bulbasaurus catched: " + String(userDef.integerForKey("LastScoreCherry"))
         cherryScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
         self.addChild(cherryScoreLabel)
+        
+        //CREATE Immortal
+        var aboutImage = SKSpriteNode(imageNamed: "immortal")
+        aboutImage.size = CGSizeMake(self.frame.width, self.frame.width)
+        aboutImage.anchorPoint = CGPointMake(0, 0)
+        aboutImage.position = CGPointMake(0,0)//self.frame.width / 2, self.frame.height / 2)
+        self.addChild(aboutImage)
+        
+        let act = SKAction.moveTo(CGPointMake(aboutImage.position.x + 2, aboutImage.position.y + 2), duration: 0.05)
+        let act2 = SKAction.moveTo(CGPointMake(aboutImage.position.x - 4, aboutImage.position.y), duration: 0.05)
+        let act3 = SKAction.moveTo(CGPointMake(aboutImage.position.x + 2, aboutImage.position.y - 2), duration: 0.05)
+        
+        
+        aboutImage.runAction(SKAction.repeatActionForever(SKAction.sequence([act, act2, act3])))
+      
+        
     }
+    
+    override func didMoveToView(view: SKView) {
+        eventMusicPlayer = AVAudioPlayer(contentsOfURL: toastyMusicUrl, error: nil)
+        eventMusicPlayer.numberOfLoops = -1
+        eventMusicPlayer.prepareToPlay()
+        eventMusicPlayer.play()
+    }
+
 
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         
-         self.view?.presentScene(MainMenu(size: CGSizeMake(self.frame.width, self.frame.height)))
+         self.view?.presentScene(MainMenu(size: CGSizeMake(self.frame.width, self.frame.height)), transition: SKTransition.fadeWithDuration(0.3))
         
     }
     

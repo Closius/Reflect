@@ -64,7 +64,7 @@ class About: SKScene {
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         
-        self.view?.presentScene(MainMenu(size: CGSizeMake(self.frame.width, self.frame.height)))
+        self.view?.presentScene(MainMenu(size: CGSizeMake(self.frame.width, self.frame.height)), transition: SKTransition.fadeWithDuration(0.3))
         
     }
     
