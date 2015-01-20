@@ -188,11 +188,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreCherry += 1
             (self.childNodeWithName("LabelGame") as SKLabelNode).text = "Score: " + String(score) + " Bulbasaur: " + String(scoreCherry)
             (self.childNodeWithName(cherryCategoryName) as SKSpriteNode).zPosition = 20
-            let action = SKAction.moveTo(CGPointMake(
+            let action1 = SKAction.scaleBy(0.1, duration: 0.3)
+            
+            let action2 = SKAction.moveTo(CGPointMake(
                 CGFloat(randRange(20, upper: Int(self.frame.size.width - 20))),
                 CGFloat(randRange(20, upper: Int(self.frame.size.height - 70)))
                 ), duration: 0.0001)
-            (self.childNodeWithName(cherryCategoryName) as SKSpriteNode).runAction(action)
+            
+            let action3 = SKAction.scaleBy(10, duration: 0.3)
+            (self.childNodeWithName(cherryCategoryName) as SKSpriteNode).runAction(SKAction.sequence([action1, action2, action3]))
             (self.childNodeWithName(cherryCategoryName) as SKSpriteNode).zPosition = 0
             hitlerAppear += 1
             
@@ -228,7 +232,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var dx = (self.childNodeWithName(paddleCategoryName)?.position.x)! - (self.childNodeWithName(ballCategoryName)?.position.x)!
         var dy = (self.childNodeWithName(paddleCategoryName)?.position.y)! - (self.childNodeWithName(ballCategoryName)?.position.y)!
         self.childNodeWithName(paddleCategoryName)?.zRotation = -atan(dx/dy)
-        
         
         if gameHaveBeenStarted == false {
             gameHaveBeenStarted = true

@@ -22,7 +22,7 @@
 
 import SpriteKit
 
-class AKButtonFromLabelNode: SKShapeNode, SKSceneDelegate {
+class AKButtonFromLabelNode: SKShapeNode {
        
     var fontName: String?
     var fontSize: CGFloat?
@@ -71,15 +71,18 @@ class AKButtonFromLabelNode: SKShapeNode, SKSceneDelegate {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        
+        let action = SKAction.scaleBy(1.5, duration: 0.1)
         super.fillColor = UIColor.greenColor()
-        
+        super.runAction(action)
     }
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         var touch: UITouch = touches.allObjects[0] as UITouch
         var location: CGPoint = touch.locationInNode(self.parent)
 
+        let action1 = SKAction.scaleBy(1/1.5, duration: 0.1)
+        super.runAction(action1)
+        
         if self.containsPoint(location) {
            action!()
         }
