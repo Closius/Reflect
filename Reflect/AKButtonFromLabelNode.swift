@@ -24,75 +24,82 @@ import SpriteKit
 
 class AKButtonFromLabelNode: SKShapeNode {
        
-    var fontName: String?
-    var fontSize: CGFloat?
-    var fontColor: UIColor?
-    var text: String?
+    var fontName: String!
+    var fontSize: CGFloat!
+    var fontColor: UIColor!
+    var text: String!
     var action: (() -> Void)?
  
-    func createLabel() {
-        
-        if (fontName == nil) {
-            fontName = "System"
-            println("Warning: Property 'fontName' of object AKButtonFromLabelNode is not difened. Default values have been set: fontName = System.")
-        }
-        if (fontSize == nil) {
-            fontSize = 5
-            println("Warning: Property 'fontSize' of object AKButtonFromLabelNode is not difened. Default values have been set: fontSize = 5.")
-        }
-        if (fontColor == nil) {
-            fontColor = UIColor.greenColor()
-            println("Warning: Property 'fontColor' of object AKButtonFromLabelNode is not difened. Default values have been set: fontColor = UIColor.greenColor().")
-        }
-        if (text == nil) {
-            text = "Button"
-            println("Warning: Property 'text' of object AKButtonFromLabelNode is not difened. Default values have been set: text = Button.")
-        }
-        
-        // CREATE TEXT
-        var defaultButton = SKLabelNode(fontNamed: fontName!)
-        var font:UIFont = UIFont(name: fontName!, size: fontSize!)!
-        defaultButton.position = CGPointMake(0, -font.capHeight/2)
-        defaultButton.fontSize = fontSize!
-        defaultButton.fontColor = fontColor!
-        defaultButton.text = text!
-        defaultButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
-        defaultButton.name =  super.name! + "_label"
-        super.addChild(defaultButton)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     override init() {
         super.init()
         
         super.fillColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.7)
-        super.strokeColor = UIColor.greenColor()
-        self.userInteractionEnabled = true   // Recive touch events!!!!!
-        
+        super.strokeColor = UIColor.green
+        self.isUserInteractionEnabled = true
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let action = SKAction.scaleBy(1.5, duration: 0.1)
-        super.fillColor = UIColor.greenColor()
-        super.runAction(action)
-    }
-    
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        var touch: UITouch = touches.allObjects[0] as UITouch
-        var location: CGPoint = touch.locationInNode(self.parent)
-
-        let action1 = SKAction.scaleBy(1/1.5, duration: 0.1)
-        super.runAction(action1)
+    func createLabel() {
         
-        if self.containsPoint(location) {
-           action!()
+        if (fontName == nil) {
+            
+            fontName = "System"
+            print("Warning: Property 'fontName' of object AKButtonFromLabelNode is not difened. Default values have been set: fontName = System.")
         }
         
-        super.fillColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.7)
+        if (fontSize == nil) {
+           
+            fontSize = 5
+            print("Warning: Property 'fontSize' of object AKButtonFromLabelNode is not difened. Default values have been set: fontSize = 5.")
+        }
         
+        if (fontColor == nil) {
+            
+            fontColor = UIColor.green
+            print("Warning: Property 'fontColor' of object AKButtonFromLabelNode is not difened. Default values have been set: fontColor = UIColor.greenColor().")
+        }
+        
+        if (text == nil) {
+            
+            text = "Button"
+            print("Warning: Property 'text' of object AKButtonFromLabelNode is not difened. Default values have been set: text = Button.")
+        }
+        
+        // Create text
+        let defaultButton = SKLabelNode(fontNamed: fontName)
+        let font = UIFont(name: fontName, size: fontSize)!
+        defaultButton.position = CGPoint(x: 0, y: -font.capHeight/2)
+        defaultButton.fontSize = fontSize
+        defaultButton.fontColor = fontColor
+        defaultButton.text = text
+        defaultButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+        defaultButton.name =  self.name! + "_label"
+        self.addChild(defaultButton)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+      
+        let action = SKAction.scale(by: 1.5, duration: 0.1)
+        self.fillColor = UIColor.green
+        self.run(action)
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self.parent!)
+
+        let skAction = SKAction.scale(by: 1/1.5, duration: 0.1)
+        self.run(skAction)
+        
+        if self.contains(location) {
+           
+            action?()
+        }
+        
+        self.fillColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.7)
+    }
 }

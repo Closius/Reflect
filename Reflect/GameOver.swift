@@ -12,81 +12,72 @@ import AVFoundation
 
 class GameOver: SKScene {
     
-    let userDef = NSUserDefaults.standardUserDefaults()
+    let userDef = UserDefaults.standard
     
     var eventMusicPlayer = AVAudioPlayer()
-    let toastyMusicUrl = NSBundle.mainBundle().URLForResource("forgoth", withExtension: "mp3")
+    let toastyMusicUrl = Bundle.main.url(forResource: "forgoth", withExtension: "mp3")!
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override init(size: CGSize){
         super.init(size: size)
         
-        self.backgroundColor = SKColor.blackColor()
+        self.backgroundColor = SKColor.black
         
-        //CREATE WELCOME LABEL
-        var gameOverLabel = SKLabelNode(fontNamed: "unifont")
-        gameOverLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 130)
+        // CREATE WELCOME LABEL
+        let gameOverLabel = SKLabelNode(fontNamed: "unifont")
+        gameOverLabel.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height - 130)
         gameOverLabel.fontSize = 30
-        gameOverLabel.fontColor = SKColor.greenColor()
+        gameOverLabel.fontColor = SKColor.green
         gameOverLabel.text = "GAME OVER"
-        gameOverLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        gameOverLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         self.addChild(gameOverLabel)
         
-        //CREATE score LABEL
-        var scoreLabel = SKLabelNode(fontNamed: "unifont")
-        scoreLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 200)
+        // CREATE score LABEL
+        let scoreLabel = SKLabelNode(fontNamed: "unifont")
+        scoreLabel.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height - 200)
         scoreLabel.fontSize = 22
-        scoreLabel.fontColor = SKColor.greenColor()
-        scoreLabel.text = "Your score: " + String(userDef.integerForKey("LastScore"))
-        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        scoreLabel.fontColor = SKColor.green
+        scoreLabel.text = "Your score: " + String(userDef.integer(forKey: "LastScore"))
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         self.addChild(scoreLabel)
         
-        //CREATE cherry LABEL
-        var cherryScoreLabel = SKLabelNode(fontNamed: "unifont")
-        cherryScoreLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 225)
+        // CREATE cherry LABEL
+        let cherryScoreLabel = SKLabelNode(fontNamed: "unifont")
+        cherryScoreLabel.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height - 225)
         cherryScoreLabel.fontSize = 22
-        cherryScoreLabel.fontColor = SKColor.greenColor()
-        cherryScoreLabel.text = "Bulbasaurus catched: " + String(userDef.integerForKey("LastScoreCherry"))
-        cherryScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        cherryScoreLabel.fontColor = SKColor.green
+        cherryScoreLabel.text = "Bulbasaurus catched: " + String(userDef.integer(forKey: "LastScoreCherry"))
+        cherryScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         self.addChild(cherryScoreLabel)
         
-        //CREATE Immortal
-        var aboutImage = SKSpriteNode(imageNamed: "immortal")
-        aboutImage.size = CGSizeMake(self.frame.width, self.frame.width)
-        aboutImage.anchorPoint = CGPointMake(0, 0)
-        aboutImage.position = CGPointMake(0,0)//self.frame.width / 2, self.frame.height / 2)
+        // CREATE Immortal
+        let aboutImage = SKSpriteNode(imageNamed: "immortal")
+        aboutImage.size = CGSize(width: self.frame.width, height: self.frame.width)
+        aboutImage.anchorPoint = CGPoint(x: 0, y: 0)
+        aboutImage.position = CGPoint(x: 0,y: 0)//self.frame.width / 2, self.frame.height / 2)
         self.addChild(aboutImage)
         
-        let act = SKAction.moveTo(CGPointMake(aboutImage.position.x + 2, aboutImage.position.y + 2), duration: 0.05)
-        let act2 = SKAction.moveTo(CGPointMake(aboutImage.position.x - 4, aboutImage.position.y), duration: 0.05)
-        let act3 = SKAction.moveTo(CGPointMake(aboutImage.position.x + 2, aboutImage.position.y - 2), duration: 0.05)
+        let act = SKAction.move(to: CGPoint(x: aboutImage.position.x + 2, y: aboutImage.position.y + 2), duration: 0.05)
+        let act2 = SKAction.move(to: CGPoint(x: aboutImage.position.x - 4, y: aboutImage.position.y), duration: 0.05)
+        let act3 = SKAction.move(to: CGPoint(x: aboutImage.position.x + 2, y: aboutImage.position.y - 2), duration: 0.05)
         
         
-        aboutImage.runAction(SKAction.repeatActionForever(SKAction.sequence([act, act2, act3])))
-      
-        
+        aboutImage.run(SKAction.repeatForever(SKAction.sequence([act, act2, act3])))
     }
     
-    override func didMoveToView(view: SKView) {
-        eventMusicPlayer = AVAudioPlayer(contentsOfURL: toastyMusicUrl, error: nil)
+    override func didMove(to view: SKView) {
+        
+        eventMusicPlayer = try! AVAudioPlayer(contentsOf: toastyMusicUrl)
         eventMusicPlayer.numberOfLoops = -1
         eventMusicPlayer.prepareToPlay()
         eventMusicPlayer.play()
     }
-
-
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-         self.view?.presentScene(MainMenu(size: CGSizeMake(self.frame.width, self.frame.height)), transition: SKTransition.fadeWithDuration(0.3))
-        
+         self.view?.presentScene(MainMenu(size: CGSize(width: self.frame.width, height: self.frame.height)), transition: SKTransition.fade(withDuration: 0.3))
     }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-
-   
 }

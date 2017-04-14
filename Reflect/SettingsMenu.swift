@@ -11,158 +11,182 @@ import SpriteKit
 
 class SettingsMenu: SKScene {
    
-    let userDef = NSUserDefaults.standardUserDefaults()
+    let userDef = UserDefaults.standard
     
-    var gameSpeed:Int = 2
-    var surprizeFreequence: Int = 10
-    var cherrySize: Int = 50
-    var gameMode: Bool = true
+    var gameSpeed = 2
+    var surprizeFreequence = 10
+    var cherrySize = 50
+    var gameMode = true
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override init(size: CGSize){
         super.init(size: size)
         
-        self.backgroundColor = SKColor.blackColor()
+        self.backgroundColor = SKColor.black
         
-        if userDef.integerForKey("Speed") == 0 {
-            userDef.setInteger(gameSpeed, forKey: "Speed")
-            userDef.setInteger(surprizeFreequence, forKey: "SurprizeFreequence")
-            userDef.setInteger(cherrySize, forKey: "CherrySize")
-            userDef.setBool(gameMode, forKey: "GameMode")
+        if userDef.integer(forKey: "Speed") == 0 {
+            
+            userDef.set(gameSpeed, forKey: "Speed")
+            userDef.set(surprizeFreequence, forKey: "SurprizeFreequence")
+            userDef.set(cherrySize, forKey: "CherrySize")
+            userDef.set(gameMode, forKey: "GameMode")
+            
         } else {
-            gameSpeed = userDef.integerForKey("Speed")
-            surprizeFreequence = userDef.integerForKey("SurprizeFreequence")
-            cherrySize = userDef.integerForKey("CherrySize")
-            gameMode = userDef.boolForKey("GameMode")
+            
+            gameSpeed = userDef.integer(forKey: "Speed")
+            surprizeFreequence = userDef.integer(forKey: "SurprizeFreequence")
+            cherrySize = userDef.integer(forKey: "CherrySize")
+            gameMode = userDef.bool(forKey: "GameMode")
         }
 
-        //CREATE SETTINGS LABEL
-        var gameOverLabel = SKLabelNode(fontNamed: "unifont")
-        gameOverLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 100)
+        // CREATE SETTINGS LABEL
+        let gameOverLabel = SKLabelNode(fontNamed: "unifont")
+        gameOverLabel.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height - 100)
         gameOverLabel.fontSize = 30
-        gameOverLabel.fontColor = SKColor.greenColor()
+        gameOverLabel.fontColor = SKColor.green
         gameOverLabel.text = "Settings"
-        gameOverLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        gameOverLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         self.addChild(gameOverLabel)
         
-        //Create settings fields(buttons and labels)
-        createSettingsButton(name: "Speed", text: "Speed", h_position: self.frame.size.height - 200, value: &gameSpeed)
-        createSettingsButton(name: "SurprizeFreequence", text: "Surprize", h_position: self.frame.size.height - 300, value: &surprizeFreequence)
-        createSettingsButton(name: "CherrySize", text: "Target Size", h_position: self.frame.size.height - 400, value: &cherrySize)
+        // Create settings fields(buttons and labels)
+        createSettingsButton(name: "Speed", text: "Speed", h_position: self.frame.size.height - 200, value: gameSpeed)
+        createSettingsButton(name: "SurprizeFreequence", text: "Surprize", h_position: self.frame.size.height - 300, value: surprizeFreequence)
+        createSettingsButton(name: "CherrySize", text: "Target Size", h_position: self.frame.size.height - 400, value: cherrySize)
         
-        //CREATE Back to main menu button
-        var w:CGFloat = 60
-        var h:CGFloat = 25
-        var backButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        // CREATE Back to main menu button
+        var w: CGFloat = 60
+        var h: CGFloat = 25
+        
+        let backButton = AKButtonFromLabelNode(rect: CGRect(x: -w/2, y: -h/2, width: w, height: h))
         backButton.name = "BackButton"
-        backButton.position = CGPointMake(w/2 + 10, self.frame.size.height - h/2 - 10)
+        backButton.position = CGPoint(x: w/2 + 10, y: self.frame.size.height - h/2 - 10)
         backButton.text = "Back"
         backButton.fontSize = 20
         backButton.fontName = "unifont"
-        backButton.fontColor = UIColor.blackColor()
+        backButton.fontColor = UIColor.black
+        
         backButton.action = { [weak self] in
+          
             if let strongSelf = self {
-                let userDef = NSUserDefaults.standardUserDefaults()
-                userDef.setBool(strongSelf.gameMode, forKey: "GameMode")
-                strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size), transition: SKTransition.fadeWithDuration(0.3))
-            } }
+            
+                let userDef = UserDefaults.standard
+                userDef.set(strongSelf.gameMode, forKey: "GameMode")
+                strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size), transition: SKTransition.fade(withDuration: 0.3))
+            }
+        }
+        
         backButton.createLabel()
         self.addChild(backButton)
         
-        //CREATE test button
+        // CREATE test button
         w = 100
         h = 30
-        var testButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        
+        let testButton = AKButtonFromLabelNode(rect: CGRect(x: -w/2, y: -h/2, width: w, height: h))
         testButton.name = "TestButton"
-        testButton.position = CGPointMake(self.frame.size.width / 2, 80)
+        testButton.position = CGPoint(x: self.frame.size.width / 2, y: 80)
         gameMode == true ? (testButton.text = "Game Mode") : (testButton.text = "Test Mode")
+        
         testButton.fontSize = 20
         testButton.fontName = "unifont"
-        testButton.fontColor = UIColor.blackColor()
+        testButton.fontColor = UIColor.black
+        
         testButton.action = { [weak self] in
+           
             if let strongSelf = self {
+            
                 if strongSelf.gameMode == true {
-                    (testButton.childNodeWithName( testButton.name! + "_label") as SKLabelNode).text = "Test Mode"
+                    
+                    (testButton.childNode( withName: testButton.name! + "_label") as! SKLabelNode).text = "Test Mode"
                     strongSelf.gameMode = false
+                    
                 } else {
-                    (testButton.childNodeWithName( testButton.name! + "_label") as SKLabelNode).text = "Game Mode"
+                    
+                    (testButton.childNode( withName: testButton.name! + "_label") as! SKLabelNode).text = "Game Mode"
                     strongSelf.gameMode = true
                 }
-            } }
+            }
+        }
+        
         testButton.createLabel()
         self.addChild(testButton)
     }
     
-    func createSettingsButton( #name: String, text: String, h_position: CGFloat, inout value: Int) {
-                                                                              // inout - parameter in function by reference
-        var fontName = "unifont"
-        var font_value_Size:CGFloat = 30
-        var font_Value:UIFont = UIFont(name: "unifont", size: font_value_Size)!
+    func createSettingsButton(name: String, text: String, h_position: CGFloat, value: Int) {
+        
+        var value = value
+        
+        let fontName = "unifont"
+        let font_value_Size: CGFloat = 30
+        let font_Value = UIFont(name: fontName, size: font_value_Size)!
        
         let plus_CategoryName                 = name + "_Plus_CategoryName"
         let minus_CategoryName                = name + "_Minus_CategoryName"
         let value_CategoryName                = name + "_Value_CategoryName"
         
-        //CREATE VALUE
-        var set_ValueLabel = SKLabelNode(fontNamed: fontName)
-        set_ValueLabel.position = CGPointMake(self.frame.size.width / 2, h_position - font_Value.capHeight/2)
+        // CREATE VALUE
+        let set_ValueLabel = SKLabelNode(fontNamed: fontName)
+        set_ValueLabel.position = CGPoint(x: self.frame.size.width / 2, y: h_position - font_Value.capHeight/2)
         set_ValueLabel.fontSize = font_value_Size
-        set_ValueLabel.fontColor = SKColor.greenColor()
+        set_ValueLabel.fontColor = SKColor.green
         set_ValueLabel.text = String(value)
-        set_ValueLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        set_ValueLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         set_ValueLabel.name = value_CategoryName
         self.addChild(set_ValueLabel)
 
-        //PLUS BUTTON
-        var w:CGFloat = 40
-        var h:CGFloat = 40
-        var set_PlusButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        // PLUS BUTTON
+        let w: CGFloat = 40
+        let h: CGFloat = 40
+        let set_PlusButton = AKButtonFromLabelNode(rect: CGRect(x: -w/2, y: -h/2, width: w, height: h))
         set_PlusButton.name = plus_CategoryName
-        set_PlusButton.position = CGPointMake(self.frame.size.width - (self.frame.size.width / 5), h_position)
+        set_PlusButton.position = CGPoint(x: self.frame.size.width - (self.frame.size.width / 5), y: h_position)
         set_PlusButton.text = "+"
         set_PlusButton.fontSize = 30
         set_PlusButton.fontName = "unifont"
-        set_PlusButton.fontColor = UIColor.blackColor()
+        set_PlusButton.fontColor = UIColor.black
+        
         set_PlusButton.action = {
-                                     ++value
+                                     value += 1
                                      set_ValueLabel.text = String(value)
-                                     let userDef = NSUserDefaults.standardUserDefaults()
-                                     userDef.setInteger(value, forKey: name)
+                                     let userDef = UserDefaults.standard
+                                     userDef.set(value, forKey: name)
                                      userDef.synchronize()
                                 }
+        
         set_PlusButton.createLabel()
         self.addChild(set_PlusButton)
         
-        //MINUS BUTTON
-        var set_MinusButton = AKButtonFromLabelNode(rect: CGRectMake(-w/2, -h/2, w, h))
+        // MINUS BUTTON
+        let set_MinusButton = AKButtonFromLabelNode(rect: CGRect(x: -w/2, y: -h/2, width: w, height: h))
         set_MinusButton.name = minus_CategoryName
-        set_MinusButton.position = CGPointMake(self.frame.size.width / 5, h_position)
+        set_MinusButton.position = CGPoint(x: self.frame.size.width / 5, y: h_position)
         set_MinusButton.text = "-"
         set_MinusButton.fontSize = 30
         set_MinusButton.fontName = "unifont"
-        set_MinusButton.fontColor = UIColor.blackColor()
+        set_MinusButton.fontColor = UIColor.black
+        
         set_MinusButton.action = {
-                                     --value
+                                     value -= 1
                                      if value < 1 { value = 1 }
                                      set_ValueLabel.text = String(value)
-                                     let userDef = NSUserDefaults.standardUserDefaults()
-                                     userDef.setInteger(value, forKey: name)
+                                     let userDef = UserDefaults.standard
+                                     userDef.set(value, forKey: name)
                                      userDef.synchronize()
                                  }
+        
         set_MinusButton.createLabel()
         self.addChild(set_MinusButton)
         
-        //CREATE LABEL
-        var setLabel = SKLabelNode(fontNamed: "unifont")
-        setLabel.position = CGPointMake(self.frame.size.width / 2, h_position + h/2)
+        // CREATE LABEL
+        let setLabel = SKLabelNode(fontNamed: "unifont")
+        setLabel.position = CGPoint(x: self.frame.size.width / 2, y: h_position + h/2)
         setLabel.fontSize = 20
-        setLabel.fontColor = SKColor.greenColor()
+        setLabel.fontColor = SKColor.green
         setLabel.text = text
-        setLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Center
+        setLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         self.addChild(setLabel)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }
