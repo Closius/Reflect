@@ -78,12 +78,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		844201101A6A7A3300E7FC31 /* Sup. Classes */ = {
+		844201101A6A7A3300E7FC31 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				84AA3B941A63FD1D008381BF /* AKButtonFromLabelNode.swift */,
 			);
-			name = "Sup. Classes";
+			name = Nodes;
 			sourceTree = "<group>";
 		};
 		8465511F1A63CEDE0059BCAD = {
@@ -108,14 +108,10 @@
 		8465512A1A63CEDE0059BCAD /* Reflect */ = {
 			isa = PBXGroup;
 			children = (
-				844201101A6A7A3300E7FC31 /* Sup. Classes */,
-				84A347291A63D90E0069C4FE /* SuppFiles */,
+				F8306C041EA1706000DFAF21 /* Delegate */,
+				F8306C031EA1705900DFAF21 /* Controllers */,
+				844201101A6A7A3300E7FC31 /* Nodes */,
 				846551531A63D0F70059BCAD /* Scenes */,
-				8465512D1A63CEDE0059BCAD /* AppDelegate.swift */,
-				846551331A63CEDE0059BCAD /* GameViewController.swift */,
-				846551351A63CEDE0059BCAD /* Main.storyboard */,
-				846551381A63CEDE0059BCAD /* Images.xcassets */,
-				8465513A1A63CEDE0059BCAD /* LaunchScreen.xib */,
 				8465512B1A63CEDE0059BCAD /* Supporting Files */,
 			);
 			path = Reflect;
@@ -124,6 +120,10 @@
 		8465512B1A63CEDE0059BCAD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				846551381A63CEDE0059BCAD /* Images.xcassets */,
+				846551351A63CEDE0059BCAD /* Main.storyboard */,
+				8465513A1A63CEDE0059BCAD /* LaunchScreen.xib */,
+				F8306C021EA1703100DFAF21 /* Media */,
 				8465512C1A63CEDE0059BCAD /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -158,7 +158,7 @@
 			name = Scenes;
 			sourceTree = "<group>";
 		};
-		84A347291A63D90E0069C4FE /* SuppFiles */ = {
+		F8306C021EA1703100DFAF21 /* Media */ = {
 			isa = PBXGroup;
 			children = (
 				844201131A6A85A200E7FC31 /* game.mp3 */,
@@ -166,7 +166,23 @@
 				844201191A6A89BA00E7FC31 /* forgoth.mp3 */,
 				84A3472B1A63D93E0069C4FE /* unifont.ttf */,
 			);
-			name = SuppFiles;
+			name = Media;
+			sourceTree = "<group>";
+		};
+		F8306C031EA1705900DFAF21 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				846551331A63CEDE0059BCAD /* GameViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		F8306C041EA1706000DFAF21 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				8465512D1A63CEDE0059BCAD /* AppDelegate.swift */,
+			);
+			name = Delegate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,14 +229,18 @@
 		846551201A63CEDE0059BCAD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Mamka Admina";
 				TargetAttributes = {
 					846551271A63CEDE0059BCAD = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = Y2V78VDHEV;
+						LastSwiftMigration = 0830;
+						ProvisioningStyle = Automatic;
 					};
 					846551401A63CEDE0059BCAD = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = 846551271A63CEDE0059BCAD;
 					};
 				};
@@ -336,8 +356,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
@@ -345,8 +367,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -381,8 +405,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
@@ -392,6 +418,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -401,6 +428,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -411,9 +439,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Y2V78VDHEV;
 				INFOPLIST_FILE = Reflect/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Closius.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -422,9 +456,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Y2V78VDHEV;
 				INFOPLIST_FILE = Reflect/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Closius.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -442,7 +482,9 @@
 				);
 				INFOPLIST_FILE = ReflectTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Closius.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reflect.app/Reflect";
 			};
 			name = Debug;
@@ -457,7 +499,9 @@
 				);
 				INFOPLIST_FILE = ReflectTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Closius.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reflect.app/Reflect";
 			};
 			name = Release;

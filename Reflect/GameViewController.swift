@@ -14,38 +14,39 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        
-        let skView = self.view as SKView
+        let skView = self.view as! SKView
         
         if skView.scene == nil {
-            //    skView.showsFPS = true
-            //    skView.showsNodeCount = true
-            //    skView.showsPhysics = true
+            
+            // skView.showsFPS = true
+            // skView.showsNodeCount = true
+            // skView.showsPhysics = true
+            
             let mainScene = MainMenu(size: skView.bounds.size)
-            mainScene.scaleMode = .AspectFill
+            mainScene.scaleMode = .aspectFill
             skView.presentScene(mainScene)
         }
     }
 
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
+       
         return true
     }
-
-    override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        
+        if traitCollection.verticalSizeClass == .regular && traitCollection.horizontalSizeClass == .regular {
+            
+            return .all
+            
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            
+            return .allButUpsideDown
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
-    }
-
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
+       
         return true
     }
 }
