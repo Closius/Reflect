@@ -30,6 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameHaveBeenStarted = false
     
     var score = 0
+    var borderTouch = 3
     var scoreCherry = 0
     var hitlerAppear = 0
     var hitlerAppearCount = 10
@@ -39,6 +40,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let borderCategory: UInt32 = 0x1 << 1
     let paddleCategory: UInt32 = 0x1 << 2
     let cherryCategory: UInt32 = 0x1 << 3
+    
+    let hearts = [SKSpriteNode(imageNamed: "heart"), SKSpriteNode(imageNamed: "heart"), SKSpriteNode(imageNamed: "heart")]
+    
     
     var gameMode = true
     
@@ -68,6 +72,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.backgroundColor = SKColor.black
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
+        
+        
+        if gameMode == false {
+            
+            // CREATE Back to main menu button
+        
+            let backButton = AKButtonFromLabelNode(rect: CGRect(x: -60/2, y: -25/2, width: 60, height: 25))
+            backButton.name = "BackButton"
+            backButton.position = CGPoint(x: 60/2 + 10, y: self.frame.size.height - 25/2 - 10)
+            backButton.text = "Back"
+            backButton.fontSize = 20
+            backButton.fontName = "unifont"
+            backButton.fontColor = UIColor.black
+        
+            backButton.action = { [weak self] in
+            
+                if let strongSelf = self {
+                
+                    let userDef = UserDefaults.standard
+                    userDef.set(strongSelf.gameMode, forKey: "GameMode")
+                    strongSelf.view?.presentScene(MainMenu(size: strongSelf.frame.size), transition: SKTransition.fade(withDuration: 0.3))
+                }
+            }
+            
+            backButton.createLabel()
+            self.addChild(backButton)
+            
+        }
+
+
+        // CREATE Lives
+        hearts[0].size = CGSize(width: 25, height: 25)
+        hearts[0].anchorPoint = CGPoint(x: 0, y: 0)
+        hearts[0].position = CGPoint(x: self.frame.width - 35,y: self.frame.height - 35)
+        self.addChild(hearts[0])
+
+        hearts[1].size = CGSize(width: 25, height: 25)
+        hearts[1].anchorPoint = CGPoint(x: 0, y: 0)
+        hearts[1].position = CGPoint(x: self.frame.width - 35 - 30,y: self.frame.height - 35)
+        self.addChild(hearts[1])
+        
+        hearts[2].size = CGSize(width: 25, height: 25)
+        hearts[2].anchorPoint = CGPoint(x: 0, y: 0)
+        hearts[2].position = CGPoint(x: self.frame.width - 35 - 30 - 30,y: self.frame.height - 35)
+        self.addChild(hearts[2])
+        
         
         // CREATE BALL
         let ourBall = SKShapeNode(circleOfRadius: radiusBall)
@@ -109,10 +159,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // CREATE LABEL
         let labelGame = SKLabelNode(fontNamed: "unifont")
-        labelGame.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height - 35)
+        labelGame.position = CGPoint(x: (self.frame.size.width / 2) - 50, y: self.frame.size.height - 35)
         labelGame.fontSize = 20
         labelGame.fontColor = SKColor.green
-        labelGame.text = "Score: 0 Bulbasaur: 0"
+        labelGame.text = "Score: \(score) Bulbasaur: \(scoreCherry)" //"Score: 0 Bulbasaur: 0 Border: 3"
         labelGame.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
         labelGame.name = "LabelGame"
         self.addChild(labelGame)
@@ -181,12 +231,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             usedfDef.set(Int(scoreCherry), forKey: "LastScoreCherry")
             usedfDef.synchronize()
             
-            score = 0
             loose = true
+            
+            if gameMode == true {
+                borderTouch -= 1
+                self.removeChildren(in: [hearts[borderTouch]])
+            }
             
             (self.childNode(withName: "LabelGame") as! SKLabelNode).text = "Score: \(score) Bulbasaur: \(scoreCherry)"
             
-            if gameMode == true {
+            if gameMode == true && borderTouch == 0 {
                 
                 self.view?.presentScene(GameOver(size: CGSize(width: self.frame.size.width, height: self.frame.size.height)))
             }
